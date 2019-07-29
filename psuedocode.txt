@@ -1,0 +1,36 @@
+define a txn object:
+    a timestamp
+    an amount
+
+define a total object that has
+    the following fields:
+        an end time
+        a list of txns in day before end time
+        a sum of txn values
+    and the following methods other than getters/setters
+        add a txn
+
+total object add txn method(txn)
+    set the end time to the txn time
+    add the txn value to the existing sum
+    add the txn to the end of the list of values
+    for each txn in the list
+        if the txn time is older than a day before the new end time
+            subtract the txn value from the sum
+            remove the txt value from the list
+        otherwise, end the loop
+
+identifyFraudulentCards(txns, threshold)
+    create an empty map of hashes to total objects
+    create an empty set of card hashes
+
+    for each txn string
+        parse the string into a txn and a card hash
+        if card hash is already in the set
+            skip itr
+        add the card hash to the map if not already
+        add the txn to mapped total object
+        if the mapped object has an amount over threshold
+            add the card hash to the set
+
+    return card hash set
